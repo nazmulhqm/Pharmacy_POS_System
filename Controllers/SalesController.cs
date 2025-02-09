@@ -12,14 +12,10 @@ namespace Pharmacy_POS_System.Controllers
     [ApiController]
     public class SalesController : ControllerBase
     {
-        private readonly PharmacyDbContext _context;
-        private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ISaleRepository _saleRepo;
 
-        public SalesController(PharmacyDbContext context, IWebHostEnvironment hostEnvironment, ISaleRepository saleRepo)
+        public SalesController(ISaleRepository saleRepo)
         {
-            _context = context;
-            _hostEnvironment = hostEnvironment;
             _saleRepo = saleRepo;
         }
 
@@ -48,13 +44,6 @@ namespace Pharmacy_POS_System.Controllers
         {
             var data = await _saleRepo.Post(sale);
             return Ok(sale);
-        }
-
-        [HttpPut("Put/{id}")]
-        public async Task<IActionResult> Put(int id, Sale sale)
-        {
-            var data = await _saleRepo.Put(id, sale);
-            return Ok(data);
         }
     }
 }

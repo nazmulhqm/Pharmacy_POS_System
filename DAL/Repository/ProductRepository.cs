@@ -15,6 +15,28 @@ namespace Pharmacy_POS_System.DAL.Repository
             _environment = environment;
         }
 
+        public async Task<IEnumerable<Product>> GetProductsAsync(int? categoryId, int? brandId, string? searchTerm)
+        {
+            var query = _context.Products.AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == brandId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm));
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<object> Delete(int id)
         {
             var product = await _context.Products.FindAsync(id);

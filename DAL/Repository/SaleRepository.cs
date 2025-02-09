@@ -39,8 +39,23 @@ namespace Pharmacy_POS_System.DAL.Repository
             foreach (var saleItem in sale.SaleItems)
             {
                 _context.Entry(saleItem).State = EntityState.Added;
-            }
+                var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == saleItem.ProductId);
 
+                if (product != null)
+                {
+                    if (product.Stock >= saleItem.Quantity)
+                    {
+                        product.Stock -= saleItem.Quantity;
+
+                        _context.Entry(product).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Sock Less: " + product.Name);
+                    }
+                }
+            }
             _context.Sales.Add(sale);
             await _context.SaveChangesAsync();
 

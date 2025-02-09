@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12">
       <PrivateAssets>all</PrivateAssets>
@@ -22,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="ProductImage\" />
-    <Folder Include="wwwroot\ProductImage\" />
   </ItemGroup>
 
 </Project>

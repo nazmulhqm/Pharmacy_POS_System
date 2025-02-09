@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pharmacy_POS_System.Data;
 using Pharmacy_POS_System.Entities;
 using Pharmacy_POS_System.DAL.Interface;
+using Pharmacy_POS_System.DAL.Repository;
 
 namespace Pharmacy_POS_System.Controllers
 {
@@ -19,6 +20,13 @@ namespace Pharmacy_POS_System.Controllers
             _irepo = repository;
             _context = context;
             _environment = environment;
+        }
+
+        [HttpGet("GetByQuery")]
+        public async Task<IActionResult> GetProducts([FromQuery] int? categoryId, [FromQuery] int? brandId, [FromQuery] string? searchTerm)
+        {
+            var products = await _irepo.GetProductsAsync(categoryId, brandId, searchTerm);
+            return Ok(products);
         }
 
         [HttpGet]
